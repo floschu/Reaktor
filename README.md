@@ -1,6 +1,6 @@
-# KReactor
+# Reaktor
 
-![KReactor Version](https://img.shields.io/badge/KReactor-0.0.1-red.svg) ![minSdk](https://img.shields.io/badge/minSdk-14-green.svg)
+![Reaktor Version](https://img.shields.io/badge/Reaktor-0.0.1-red.svg) ![minSdk](https://img.shields.io/badge/minSdk-14-green.svg)
 
 TODO
 
