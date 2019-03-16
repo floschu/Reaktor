@@ -5,29 +5,35 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+    <ImageView
+            android:id="@+id/ivSearch"
+            android:layout_width="wrap_content"
+            android:layout_margin="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/searchView"
+            app:layout_constraintBottom_toBottomOf="@id/searchView"
+            android:src="@drawable/ic_search"
+            android:layout_height="wrap_content"/>
+
     <ProgressBar
             android:id="@+id/progressLoading"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginRight="12dp"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintBottom_toBottomOf="@id/searchView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/searchView"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/ivSearch"
+            app:layout_constraintEnd_toEndOf="@id/ivSearch"
+            app:layout_constraintStart_toStartOf="@id/ivSearch"
+            app:layout_constraintTop_toTopOf="@id/ivSearch"/>
 
     <EditText
             android:id="@+id/searchView"
             android:layout_margin="12dp"
             android:layout_width="0dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivSearch"
             android:lines="1"
             android:maxLines="1"
             tools:text="Test"
-            android:drawablePadding="12dp"
-            android:drawableLeft="@drawable/ic_search"
-            android:drawableStart="@drawable/ic_search"
-            app:layout_constraintEnd_toStartOf="@id/progressLoading"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_height="wrap_content"/>
 

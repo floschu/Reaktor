@@ -67,7 +67,7 @@ class GithubFragment : Fragment(), ReactorView<GithubReactor> {
             .let(disposables::add)
 
         reactor.state.changesFrom { it.loadingNextPage }
-            .bind(progressLoading.visibility(View.INVISIBLE))
+            .bind(progressLoading.visibility())
             .let(disposables::add)
     }
 
@@ -159,9 +159,6 @@ class GithubReactor(
 
     override fun transformAction(action: Observable<Action>): Observable<out Action> =
         action.doOnNext { Timber.v("Action: $it") }
-
-    override fun transformMutation(mutation: Observable<Mutation>): Observable<out Mutation> =
-        mutation.doOnNext { Timber.v("Mutation: $it") }
 
     override fun transformState(state: Observable<State>): Observable<out State> =
         state.doOnNext { Timber.v("State: $it") }
