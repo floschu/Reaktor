@@ -1,0 +1,97 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+def artifact = new Properties()
+artifact.load(new FileInputStream("$project.name/deploy.settings"))
+
+def localProperties = new Properties()
+localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+group = artifact.groupId
+version = config.version
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            packaging 'aar'
+            groupId artifact.groupId
+            artifactId artifact.id
+
+            name artifact.name
+            description artifact.description
+            url artifact.webUrl
+
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                }
+            }
+            developers {
+                developer {
+                    id localProperties.getProperty("developer.id")
+                    name localProperties.getProperty("developer.name")
+                    email localProperties.getProperty("developer.email")
+                }
+            }
+            scm {
+                connection artifact.gitUrl
+                developerConnection artifact.gitUrl
+                url artifact.webUrl
+            }
+        }
+    }
+}
+
+bintray {
+    user = localProperties.getProperty("bintray.user")
+    key = localProperties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = 'Reaktor'
+        name = artifact.id
+        desc = artifact.description
+        websiteUrl = artifact.webUrl
+        vcsUrl = artifact.gitUrl
+        licenses = ["Apache-2.0"]
+        dryRun = false
+        publish = true
+        override = false
+        publicDownloadNumbers = true
+        version {
+            desc = artifact.description
+        }
+    }
+}
+
+if (project.hasProperty("kotlin")) { //Kotlin libraries
+    task sourcesJar(type: Jar) {
+        archiveClassifier.set("sources")
+        from android.sourceSets.main.java.srcDirs
+    }
+
+    task javadoc(type: Javadoc, dependsOn: dokka) {
+
+    }
+} else if (project.hasProperty("android")) {
+    task sourcesJar(type: Jar) {
+        archiveClassifier.set("sources")
+        from android.sourceSets.main.java.srcDirs
+    }
+
+    task javadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier.set("javadoc")
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}

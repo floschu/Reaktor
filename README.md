@@ -19,7 +19,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'at.florianschuster:reaktor:0.0.1'
+    implementation 'at.florianschuster.reaktor:core:0.0.1'
 }
 ```
 
@@ -45,7 +45,7 @@ By default, a `Reactor` catches and ignores all errors emitted in `fun mutate()`
 
 ```groovy
 dependencies {
-    implementation 'at.florianschuster:reaktor-android:0.0.1'
+    implementation 'at.florianschuster.reaktor:android:0.0.1'
 }
 ```
 

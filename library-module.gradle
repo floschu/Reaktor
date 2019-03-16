@@ -1,11 +1,10 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
 apply plugin: 'org.jetbrains.dokka-android'
 
 android {
     compileSdkVersion rootProject.ext.config.compileSdkVersion
+
     defaultConfig {
         minSdkVersion rootProject.ext.config.minSdkVersion
         targetSdkVersion rootProject.ext.config.targetSdkVersion
@@ -16,11 +15,15 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
     }
-    testOptions {
-        unitTests.returnDefaultValues = true
-    }
+}
+
+dokka {
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/javadoc"
 }
 
 dependencies {
     implementation deps.kotlin
 }
+
+apply from: "$rootDir/deploy.gradle"

@@ -1,0 +1,6 @@
+webUrl = https://github.com/floschu/Reaktor
+gitUrl = https://github.com/floschu/Reaktor.git
+groupId = at.florianschuster.reaktor
+id = core
+description = Reaktor is a framework for a reactive and unidirectional application architecture.
+name = Reaktor-Core

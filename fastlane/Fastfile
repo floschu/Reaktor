@@ -1,0 +1,10 @@
+default_platform(:android)
+
+platform :android do
+  desc "Run all tests and deploy to jcenter"
+  lane :deploy do
+    gradle(
+        task: "test clean build install bintrayUpload"
+    )
+  end
+end
