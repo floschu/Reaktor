@@ -60,13 +60,13 @@ Also do not forget to dispose the View's `CompositeDisposable`. I propose to do 
 * Activity: `fun onDestroy()`
 * Fragment: `fun onDestroyView()`
 
-The `ViewModelReactor` is a default implementation for a `Reactor` that uses the [Android Architecture ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) and thus handles the clearing of the `CompositeDisposable` in `fun onCLeared()`.
+The `ViewModelReactor` is a default implementation for a `Reactor` that uses the [Android Architecture ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) and thus handles the clearing of the `CompositeDisposable` in `fun onCleared()`.
 
 ## Examples
 
 * [Counter](https://github.com/floschu/Reaktor/tree/master/counterexample): Most Basic Counter Example. It uses `ViewModelReactor` for an Activity.
 * [Github Search](https://github.com/floschu/Reaktor/tree/master/githubexample): Github Repository Search. It uses `ViewModelReactor` for a Fragment.
-* [Save State Example](https://github.com/floschu/Reaktor/tree/master/savedstateexaple): Like the Counter. Basic but it uses `onSaveInstanceState` to preserve the `Reactor`'s state on process death.
+* [Saved State Example](https://github.com/floschu/Reaktor/tree/master/savedstateexample): Like the Counter. Basic but it uses `onSaveInstanceState` to preserve the `Reactor`'s state on process death.
 * [Watchables](https://github.com/floschu/Watchables): A Movie and TV Show Watchlist Application. It uses [Koin](https://github.com/InsertKoinIO/koin) as DI Framework to inject dependencies into a `Reactor`.
 
 ## Author
