@@ -1,1 +1,1 @@
-include ':kreactor', ':kreactorandroid'
+include ':reaktor', ':reaktorandroid', ':counterexample', ':githubexample', ':savedstateexample'

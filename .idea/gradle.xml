@@ -8,8 +8,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/kreactor" />
-            <option value="$PROJECT_DIR$/kreactorandroid" />
+            <option value="$PROJECT_DIR$/counterexample" />
+            <option value="$PROJECT_DIR$/githubexample" />
+            <option value="$PROJECT_DIR$/reaktor" />
+            <option value="$PROJECT_DIR$/reaktorandroid" />
+            <option value="$PROJECT_DIR$/savedstateexample" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

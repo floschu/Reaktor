@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <ProgressBar
+            android:id="@+id/progressLoading"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintBottom_toBottomOf="@id/searchView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/searchView"/>
+
+    <EditText
+            android:id="@+id/searchView"
+            android:layout_margin="12dp"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:lines="1"
+            android:maxLines="1"
+            tools:text="Test"
+            android:drawablePadding="12dp"
+            android:drawableLeft="@drawable/ic_search"
+            android:drawableStart="@drawable/ic_search"
+            app:layout_constraintEnd_toStartOf="@id/progressLoading"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRepos"
+            android:padding="12dp"
+            android:clipToPadding="false"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/searchView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

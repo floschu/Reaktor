@@ -1,0 +1,24 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.config.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.config.minSdkVersion
+        targetSdkVersion rootProject.ext.config.targetSdkVersion
+        versionCode 1
+        versionName '1.0.0'
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+dependencies {
+    implementation project(':reaktor')
+    implementation project(':reaktorandroid')
+
+    implementation deps.kotlin
+}

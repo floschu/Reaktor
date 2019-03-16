@@ -1,0 +1,8 @@
+apply from: "$rootDir/library-module.gradle"
+
+dependencies {
+    implementation deps.annotations
+    implementation deps.rxjava
+    testImplementation deps.junit
+    testImplementation deps.kluent
+}

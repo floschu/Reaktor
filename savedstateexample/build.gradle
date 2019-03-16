@@ -1,0 +1,14 @@
+apply from: "$rootDir/example-module.gradle"
+
+android {
+    defaultConfig {
+        applicationId "at.florianschuster.savedstateexample"
+    }
+}
+
+dependencies {
+    implementation deps.appcompat
+    implementation deps.constraintlayout
+    implementation deps.rxbinding.values()
+    implementation deps.timber
+}

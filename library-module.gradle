@@ -1,0 +1,26 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'org.jetbrains.dokka-android'
+
+android {
+    compileSdkVersion rootProject.ext.config.compileSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.config.minSdkVersion
+        targetSdkVersion rootProject.ext.config.targetSdkVersion
+        versionCode 1
+        versionName rootProject.ext.config.version
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dependencies {
+    implementation deps.kotlin
+}

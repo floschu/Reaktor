@@ -1,0 +1,17 @@
+apply from: "$rootDir/example-module.gradle"
+
+android {
+    defaultConfig {
+        applicationId "at.florianschuster.githubexample"
+    }
+}
+
+dependencies {
+    implementation deps.appcompat
+    implementation deps.constraintlayout
+    implementation deps.recyclerview
+    implementation deps.rxbinding.values()
+    implementation deps.gson
+    implementation deps.retrofit.values()
+    implementation deps.timber
+}
