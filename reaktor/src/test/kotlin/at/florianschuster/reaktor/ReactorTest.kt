@@ -5,11 +5,18 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.TestScheduler
 import org.amshove.kluent.shouldEqual
+import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
 
 class ReactorTest {
+
+    @Before
+    fun setup() {
+        Reaktor.handleErrorsWith(false)
+    }
 
     @Test
     fun testEachMethodIsInvoked() {
@@ -65,6 +72,7 @@ class ReactorTest {
 
     @Test
     fun testLazyStateCreation() {
+
         val reactor = TestReactor()
         reactor.action.accept(listOf("action"))
 
@@ -73,8 +81,6 @@ class ReactorTest {
 
     @Test
     fun testStreamIgnoresErrorFromMutate() {
-        Reaktor.handleErrorsWith(false)
-
         val reactor = CounterReactor()
         val testObserver = reactor.state.test()
 
@@ -89,37 +95,6 @@ class ReactorTest {
             result.size shouldEqual 6
             result shouldEqual listOf(0, 1, 2, 3, 4, 5)
         }
-
-        Reaktor.handleErrorsWith()
-    }
-
-    @Test
-    fun testStreamThrowsErrorInDebugFromMutate() {
-        Reaktor.handleErrorsWith(true)
-
-        val reactor = CounterReactor()
-        val testObserver = reactor.state.test()
-
-        reactor.stateForTriggerError = 3
-        reactor.action.accept(Unit)
-        reactor.action.accept(Unit)
-        reactor.action.accept(Unit)
-        reactor.action.accept(Unit)
-        reactor.action.accept(Unit)
-
-        testObserver.values().let { result ->
-            @Suppress("ConstantConditionIf")
-            if (BuildConfig.DEBUG) {
-                result.size shouldEqual 5
-                result shouldEqual listOf(0, 1, 2, 3, 4)
-            } else {
-                result.size shouldEqual 6
-                result shouldEqual listOf(0, 1, 2, 3, 4, 5)
-            }
-
-        }
-
-        Reaktor.handleErrorsWith()
     }
 
     @Test

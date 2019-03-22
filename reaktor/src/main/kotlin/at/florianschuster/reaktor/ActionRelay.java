@@ -25,9 +25,15 @@ public final class ActionRelay<T> extends Observable<T> implements Consumer<T> {
 
     @Override
     public void accept(@NonNull T value) {
-        if (value == null) throw new NullPointerException("value must not be null.");
-        for (ActionDisposable<T> disposable : subscribers.get()) {
-            disposable.onNext(value);
+        if (value == null) throw new NullPointerException("Value must not be null.");
+        ActionDisposable<T>[] currentSubscribers = subscribers.get();
+        if (currentSubscribers.length == 0) {
+            Exception e = new IllegalStateException("You are not subscribed to 'state' but are trying to publish an 'Action'.");
+            Reaktor.INSTANCE.handleError(e);
+        } else {
+            for (ActionDisposable<T> disposable : currentSubscribers) {
+                disposable.onNext(value);
+            }
         }
     }
 
@@ -88,7 +94,13 @@ public final class ActionRelay<T> extends Observable<T> implements Consumer<T> {
             } else {
                 newSubscribers = new ActionDisposable[currentSubscribersLength - 1];
                 System.arraycopy(currentSubscribers, 0, newSubscribers, 0, j);
-                System.arraycopy(currentSubscribers, j + 1, newSubscribers, j, currentSubscribersLength - j - 1);
+                System.arraycopy(
+                        currentSubscribers,
+                        j + 1,
+                        newSubscribers,
+                        j,
+                        currentSubscribersLength - j - 1
+                );
             }
             if (subscribers.compareAndSet(currentSubscribers, newSubscribers)) {
                 return;
