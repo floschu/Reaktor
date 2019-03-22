@@ -1,6 +1,6 @@
 # Reaktor
 
-![Reaktor Version](https://img.shields.io/badge/Reaktor-0.0.1-red.svg) ![minSdk](https://img.shields.io/badge/minSdk-14-green.svg)
+![Reaktor Version](https://img.shields.io/badge/Reaktor-0.1.0-red.svg) ![minSdk](https://img.shields.io/badge/minSdk-14-green.svg)
 
 Reaktor is a framework for a reactive and unidirectional Kotlin application architecture.  
 It is a Kotlin port of the [ReaktorKit](https://github.com/ReactorKit/ReactorKit/) Swift concept.
@@ -19,7 +19,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'at.florianschuster.reaktor:core:0.0.1'
+    implementation 'at.florianschuster.reaktor:core:0.1.0'
 }
 ```
 
@@ -45,7 +45,7 @@ By default, a `Reactor` catches and ignores all errors emitted in `fun mutate()`
 
 ```groovy
 dependencies {
-    implementation 'at.florianschuster.reaktor:android:0.0.1'
+    implementation 'at.florianschuster.reaktor:android:0.1.0'
 }
 ```
 
@@ -84,7 +84,7 @@ Visit my [Website](https://florianschuster.at/).
     <string name="library_reaktor_libraryName">Reaktor</string>
     <string name="library_reaktor_libraryDescription">Reaktor is a framework for a reactive and unidirectional application architecture.</string>
     <string name="library_reaktor_libraryWebsite">https://github.com/floschu/Reaktor</string>
-    <string name="library_reaktor_libraryVersion">0.0.1</string>
+    <string name="library_reaktor_libraryVersion">0.1.0</string>
     <string name="library_reaktor_isOpenSource">true</string>
     <string name="library_reaktor_repositoryLink">https://github.com/floschu/Reaktor</string>
     <string name="library_reaktor_classPath">at.florianschuster.reaktor</string>
