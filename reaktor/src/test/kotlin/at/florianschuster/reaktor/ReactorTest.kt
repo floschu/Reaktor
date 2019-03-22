@@ -176,9 +176,9 @@ class ReactorTest {
 
 
 abstract class BaseTestReactor<A : Any, M : Any, S : Any>(
-    final override val initialState: S,
-    override var currentState: S = initialState
+    final override val initialState: S
 ) : Reactor<A, M, S> {
+    override var currentState: S = initialState
     final override var disposables = CompositeDisposable()
     final override val action = ActionRelay<A>()
     final override val state by lazy { createStateStream() }
