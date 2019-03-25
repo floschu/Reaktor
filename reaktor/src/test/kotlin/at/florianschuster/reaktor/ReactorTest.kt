@@ -7,7 +7,6 @@ import org.junit.Before
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
-
 class ReactorTest {
 
     @Before
@@ -142,7 +141,7 @@ class ReactorTest {
         testScheduler.advanceTimeBy(4, TimeUnit.SECONDS)
         reactor.action.accept(StopwatchReactor.Action.Stop)
 
-        //this should be ignored
+        // this should be ignored
         reactor.action.accept(StopwatchReactor.Action.Start)
         testScheduler.advanceTimeBy(500, TimeUnit.MILLISECONDS)
         reactor.action.accept(StopwatchReactor.Action.Stop)
@@ -151,12 +150,11 @@ class ReactorTest {
         testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
         reactor.action.accept(StopwatchReactor.Action.Stop)
 
-        assert(reactor.currentState == 10) //2+3+4+1
+        assert(reactor.currentState == 10) // 2+3+4+1
 
         RxJavaPlugins.reset()
     }
 }
-
 
 private class TestReactor : DefaultReactor<List<String>, List<String>, List<String>>(ArrayList()) {
     // 1. ["action"] + ["transformedAction"]
@@ -185,7 +183,6 @@ private class TestReactor : DefaultReactor<List<String>, List<String>, List<Stri
     }
 }
 
-
 private class CounterReactor : DefaultReactor<Unit, Unit, Int>(0) {
     var stateForTriggerError: Int? = null
     var stateForTriggerCompleted: Int? = null
@@ -204,7 +201,6 @@ private class CounterReactor : DefaultReactor<Unit, Unit, Int>(0) {
 
     override fun reduce(previousState: Int, mutation: Unit): Int = previousState + 1
 }
-
 
 private class StopwatchReactor : DefaultReactor<StopwatchReactor.Action, Int, Int>(0) {
     sealed class Action {

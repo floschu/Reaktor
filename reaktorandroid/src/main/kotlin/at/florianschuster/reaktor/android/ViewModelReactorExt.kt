@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import at.florianschuster.reaktor.Reactor
 
-
 /**
  * Lazily gets or creates the ViewModel Reactor for a FragmentActivity scope.
  */
@@ -24,7 +23,6 @@ inline fun <reified R> FragmentActivity.viewModelReactor(crossinline factory: ()
             override fun <T : ViewModel?> create(modelClass: Class<T>): T = factory() as T
         }).get(R::class.java)
     }
-
 
 /**
  * Lazily gets or creates the ViewModel Reactor for a Fragment scope.

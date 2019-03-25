@@ -2,7 +2,6 @@ package at.florianschuster.reaktor
 
 import org.junit.Test
 
-
 class ActionRelayTest {
 
     @Test
@@ -46,5 +45,4 @@ class ActionRelayTest {
             assert(result == listOf(4, 0))
         }
     }
-
 }

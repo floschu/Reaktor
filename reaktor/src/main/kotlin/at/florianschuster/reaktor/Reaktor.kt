@@ -3,7 +3,6 @@ package at.florianschuster.reaktor
 import androidx.annotation.RestrictTo
 import io.reactivex.Observable
 
-
 /**
  * Object to handle Library initializations.
  */

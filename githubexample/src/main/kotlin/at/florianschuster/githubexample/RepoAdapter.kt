@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_repo.view.*
 
-
 class RepoAdapter : ListAdapter<Repo, RepoViewHolder>(repoDiff) {
     var onClick: ((Repo) -> Unit)? = null
 
@@ -18,12 +17,10 @@ class RepoAdapter : ListAdapter<Repo, RepoViewHolder>(repoDiff) {
     override fun onBindViewHolder(holder: RepoViewHolder, position: Int): Unit = holder.bind(getItem(position), onClick)
 }
 
-
 private val repoDiff: DiffUtil.ItemCallback<Repo> = object : DiffUtil.ItemCallback<Repo>() {
     override fun areItemsTheSame(oldItem: Repo, newItem: Repo): Boolean = oldItem.id == newItem.id
     override fun areContentsTheSame(oldItem: Repo, newItem: Repo): Boolean = oldItem == newItem
 }
-
 
 class RepoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(repo: Repo, onClick: ((Repo) -> Unit)?) {

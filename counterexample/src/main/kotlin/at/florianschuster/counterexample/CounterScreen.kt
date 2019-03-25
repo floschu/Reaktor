@@ -15,7 +15,6 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_counter.*
 import java.util.concurrent.TimeUnit
 
-
 private const val layout: Int = R.layout.activity_counter
 
 class CounterActivity : AppCompatActivity(), ReactorView<CounterReactor> {
@@ -30,7 +29,7 @@ class CounterActivity : AppCompatActivity(), ReactorView<CounterReactor> {
     }
 
     override fun bind(reactor: CounterReactor) {
-        //action
+        // action
         btnIncrease.clicks()
             .map { CounterReactor.Action.Increase }
             .consume(with = reactor)
@@ -41,7 +40,7 @@ class CounterActivity : AppCompatActivity(), ReactorView<CounterReactor> {
             .consume(with = reactor)
             .let(disposables::add)
 
-        //state
+        // state
         reactor.state.changesFrom { it.value }
             .map { "$it" }
             .bind(to = tvValue::setText)
@@ -57,7 +56,6 @@ class CounterActivity : AppCompatActivity(), ReactorView<CounterReactor> {
         disposables.clear()
     }
 }
-
 
 class CounterReactor(
     initialState: State = State()

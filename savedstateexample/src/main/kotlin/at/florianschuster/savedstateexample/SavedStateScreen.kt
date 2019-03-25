@@ -15,7 +15,6 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_saved_state.*
 import java.util.concurrent.TimeUnit
 
-
 const val layout: Int = R.layout.activity_saved_state
 
 class SavedStateActivity : AppCompatActivity(), ReactorView<SaveStateReactor> {
@@ -34,7 +33,7 @@ class SavedStateActivity : AppCompatActivity(), ReactorView<SaveStateReactor> {
     }
 
     override fun bind(reactor: SaveStateReactor) {
-        //action
+        // action
         btnIncrease.clicks()
             .map { SaveStateReactor.Action.Increase }
             .consume(with = reactor)
@@ -45,7 +44,7 @@ class SavedStateActivity : AppCompatActivity(), ReactorView<SaveStateReactor> {
             .consume(with = reactor)
             .let(disposables::add)
 
-        //state
+        // state
         reactor.state.changesFrom { it.value }
             .map { "$it" }
             .bind(to = tvValue::setText)

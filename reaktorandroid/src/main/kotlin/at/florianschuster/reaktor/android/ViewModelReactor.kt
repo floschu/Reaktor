@@ -47,5 +47,4 @@ abstract class SimpleViewModelReactor<Action : Any, State : Any>(
 ) : ViewModelReactor<Action, Action, State>(initialState, initialAction) {
 
     override fun mutate(action: Action): Observable<Action> = Observable.just(action)
-
 }

@@ -25,7 +25,6 @@ abstract class DefaultReactor<Action : Any, Mutation : Any, State : Any>(
             return _action
         }
     final override val state: Observable<out State> by lazy { createStateStream(_action) }
-
 }
 
 /**
@@ -37,7 +36,6 @@ abstract class SimpleDefaultReactor<Action : Any, State : Any>(
 ) : DefaultReactor<Action, Action, State>(initialState, initialAction) {
 
     override fun mutate(action: Action): Observable<Action> = Observable.just(action)
-
 }
 
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)

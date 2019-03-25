@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.fragment_github.*
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-
 private const val layout: Int = R.layout.fragment_github
 
 class GithubFragment : Fragment(), ReactorView<GithubReactor> {
@@ -46,7 +45,7 @@ class GithubFragment : Fragment(), ReactorView<GithubReactor> {
     }
 
     override fun bind(reactor: GithubReactor) {
-        //action
+        // action
         searchView.textChanges()
             .skipInitialValue()
             .debounce(300, TimeUnit.MILLISECONDS)
@@ -62,7 +61,7 @@ class GithubFragment : Fragment(), ReactorView<GithubReactor> {
             .consume(with = reactor)
             .let(disposables::add)
 
-        //state
+        // state
         reactor.state.changesFrom { it.repos }
             .bind(to = adapter::submitList)
             .let(disposables::add)

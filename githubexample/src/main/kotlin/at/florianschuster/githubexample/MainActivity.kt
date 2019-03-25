@@ -3,7 +3,6 @@ package at.florianschuster.githubexample
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-
 private const val layout = R.layout.activity_main
 
 class MainActivity : AppCompatActivity() {

@@ -2,7 +2,6 @@ package at.florianschuster.reaktor
 
 import io.reactivex.disposables.CompositeDisposable
 
-
 /**
  * A [ReactorView] displays data. The [ReactorView] binds user inputs to the action stream and binds the
  * [ReactorView] states to each UI component. There's no business logic in a view layer. A view just defines how
