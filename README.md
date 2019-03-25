@@ -1,6 +1,6 @@
 # Reaktor
 
-![Reaktor Version](https://img.shields.io/badge/Reaktor-0.1.1-red.svg) ![minSdk](https://img.shields.io/badge/minSdk-14-green.svg)
+![Reaktor Version](https://img.shields.io/badge/Reaktor-1.0.0-red.svg) ![minSdk](https://img.shields.io/badge/minSdk-14-green.svg)
 
 Reaktor is a framework for a reactive and unidirectional Kotlin application architecture.  
 It is a Kotlin port of the [ReaktorKit](https://github.com/ReactorKit/ReactorKit/) Swift concept.
@@ -19,7 +19,17 @@ allprojects {
 }
 
 dependencies {
-    implementation 'at.florianschuster.reaktor:core:0.1.1'
+    implementation 'at.florianschuster.reaktor:core:1.0.0'
+    
+    /**
+     * Android (AAC) Extensions for Reactor. See: Reaktor-Android
+     */
+    implementation 'at.florianschuster.reaktor:android:1.0.0'
+    
+    /**
+     * Android (AAC) Koin Extensions for Reactor. See: Reaktor-Android-Koin
+     */
+    implementation 'at.florianschuster.reaktor:androidkoin:1.0.0'
 }
 ```
 
@@ -39,15 +49,11 @@ For this you should hit up the [ReactorKit Repo Readme](https://github.com/React
 
 A Reactor has to implement the `Reactor<Action, Mutation, State>` interface. Do not forget to clear the `CompositeDisposable` in the `Reactor` after you are done with it. A View that binds to a Reactor has to implement the interface `ReactorView`.
 
+The `DefaultReactor` is a default implementation for a `Reactor` that handles creation for all variables but not the clearing of the `CompositeDisposable`.
+
 By default, a `Reactor` catches and ignores all errors emitted in `fun mutate()` and `fun reduce()` in release builds to keep the `state` stream going. You can change this behavior for debug builds and also attach an error handler with `Reaktor.handleErrorsWith(...)`.  
 
 ### Reaktor-Android
-
-```groovy
-dependencies {
-    implementation 'at.florianschuster.reaktor:android:0.1.1'
-}
-```
 
 When binding the Reactor to an Activity or a Fragment, their life cycles have to be taken into account.  
 All views have to be laid out before the bind happens, so you should not call `fun bind(Reactor)` before:
@@ -61,6 +67,14 @@ Also do not forget to dispose the View's `CompositeDisposable`. I propose to do 
 * Fragment: `fun onDestroyView()`
 
 The `ViewModelReactor` is a default implementation for a `Reactor` that uses the [Android Architecture ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) and thus handles the clearing of the `CompositeDisposable` in `fun onCleared()`.
+
+When binding a `State` stream to a View, the `fun bind(...)` extension function can come in handy since it observes on the `AndroidSchedulers.mainThread()` and also logs errors.
+
+### Reaktor-Android-Koin
+
+[Koin](https://github.com/InsertKoinIO/koin) is a lightweight dependency injection framework for Kotlin.
+
+The `androidkoin` module contains the simple extension functions for the `ViewModelReactor`. They are just renamed extension functions that can be used for more clarity when developing with the framework.
 
 ## Examples
 
@@ -84,7 +98,7 @@ Visit my [Website](https://florianschuster.at/).
     <string name="library_reaktor_libraryName">Reaktor</string>
     <string name="library_reaktor_libraryDescription">Reaktor is a framework for a reactive and unidirectional application architecture.</string>
     <string name="library_reaktor_libraryWebsite">https://github.com/floschu/Reaktor</string>
-    <string name="library_reaktor_libraryVersion">0.1.1</string>
+    <string name="library_reaktor_libraryVersion">1.0.0</string>
     <string name="library_reaktor_isOpenSource">true</string>
     <string name="library_reaktor_repositoryLink">https://github.com/floschu/Reaktor</string>
     <string name="library_reaktor_classPath">at.florianschuster.reaktor</string>

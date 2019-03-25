@@ -37,22 +37,22 @@ class SavedStateActivity : AppCompatActivity(), ReactorView<SaveStateReactor> {
         //action
         btnIncrease.clicks()
             .map { SaveStateReactor.Action.Increase }
-            .consume(reactor)
+            .consume(with = reactor)
             .let(disposables::add)
 
         btnDecrease.clicks()
             .map { SaveStateReactor.Action.Decrease }
-            .consume(reactor)
+            .consume(with = reactor)
             .let(disposables::add)
 
         //state
         reactor.state.changesFrom { it.value }
             .map { "$it" }
-            .bind(tvValue::setText)
+            .bind(to = tvValue::setText)
             .let(disposables::add)
 
         reactor.state.changesFrom { it.loading }
-            .bind(progressLoading.visibility())
+            .bind(to = progressLoading.visibility())
             .let(disposables::add)
     }
 
@@ -103,9 +103,9 @@ class SaveStateReactor(
         )
     }
 
-    override fun reduce(state: State, mutation: Mutation): State = when (mutation) {
-        is Mutation.IncreaseValue -> state.copy(value = state.value + 1)
-        is Mutation.DecreaseValue -> state.copy(value = state.value - 1)
-        is Mutation.SetLoading -> state.copy(loading = mutation.loading)
+    override fun reduce(previousState: State, mutation: Mutation): State = when (mutation) {
+        is Mutation.IncreaseValue -> previousState.copy(value = previousState.value + 1)
+        is Mutation.DecreaseValue -> previousState.copy(value = previousState.value - 1)
+        is Mutation.SetLoading -> previousState.copy(loading = mutation.loading)
     }
 }

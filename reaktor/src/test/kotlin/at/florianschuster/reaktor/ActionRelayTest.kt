@@ -1,6 +1,5 @@
 package at.florianschuster.reaktor
 
-import org.amshove.kluent.shouldEqual
 import org.junit.Test
 
 
@@ -16,25 +15,36 @@ class ActionRelayTest {
         relay.accept(2)
 
         testObserver.values().let { result ->
-            result.size shouldEqual 3
-            result shouldEqual listOf(0, 1, 2)
+            assert(result.size == 3)
+            assert(result == listOf(0, 1, 2))
         }
     }
 
     @Test
     fun testObservers() {
         val relay = ActionRelay<Int>()
-        relay.observerCount shouldEqual 0
+        assert(relay.observerCount == 0)
 
         relay.subscribe()
-        relay.observerCount shouldEqual 1
+        assert(relay.observerCount == 1)
 
         relay.subscribe()
-        relay.observerCount shouldEqual 2
+        assert(relay.observerCount == 2)
 
         relay.subscribe()
         relay.subscribe()
-        relay.observerCount shouldEqual 4
+        assert(relay.observerCount == 4)
+    }
+
+    @Test
+    fun testInitialValue() {
+        val relay = ActionRelay(4)
+        val testObserver = relay.test()
+        relay.accept(0)
+        testObserver.values().let { result ->
+            assert(result.size == 2)
+            assert(result == listOf(4, 0))
+        }
     }
 
 }

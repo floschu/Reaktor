@@ -50,24 +50,25 @@ class GithubFragment : Fragment(), ReactorView<GithubReactor> {
         searchView.textChanges()
             .skipInitialValue()
             .debounce(300, TimeUnit.MILLISECONDS)
+            .filter { it.length >= 2 }
             .map { GithubReactor.Action.UpdateQuery(it.toString()) }
-            .consume(reactor)
+            .consume(with = reactor)
             .let(disposables::add)
 
         rvRepos.scrollEvents()
             .sample(500, TimeUnit.MILLISECONDS)
             .filter { it.view.shouldLoadMore() }
             .map { GithubReactor.Action.LoadNextPage }
-            .consume(reactor)
+            .consume(with = reactor)
             .let(disposables::add)
 
         //state
         reactor.state.changesFrom { it.repos }
-            .bind(adapter::submitList)
+            .bind(to = adapter::submitList)
             .let(disposables::add)
 
         reactor.state.changesFrom { it.loadingNextPage }
-            .bind(progressLoading.visibility())
+            .bind(to = progressLoading.visibility())
             .let(disposables::add)
     }
 
@@ -137,11 +138,14 @@ class GithubReactor(
         }
     }
 
-    override fun reduce(state: State, mutation: Mutation): State = when (mutation) {
-        is Mutation.SetQuery -> state.copy(query = mutation.query)
-        is Mutation.SetRepos -> state.copy(repos = mutation.repos, nextPage = mutation.nextPage)
-        is Mutation.AppendRepos -> state.copy(repos = state.repos + mutation.repos, nextPage = mutation.nextPage)
-        is Mutation.SetLoadingNextPage -> state.copy(loadingNextPage = mutation.loading)
+    override fun reduce(previousState: State, mutation: Mutation): State = when (mutation) {
+        is Mutation.SetQuery -> previousState.copy(query = mutation.query)
+        is Mutation.SetRepos -> previousState.copy(repos = mutation.repos, nextPage = mutation.nextPage)
+        is Mutation.AppendRepos -> previousState.copy(
+            repos = previousState.repos + mutation.repos,
+            nextPage = mutation.nextPage
+        )
+        is Mutation.SetLoadingNextPage -> previousState.copy(loadingNextPage = mutation.loading)
     }
 
     private fun search(query: String?, page: Int): Observable<Pair<List<Repo>, Int?>> {
@@ -156,10 +160,4 @@ class GithubReactor(
                 .toObservable()
         }
     }
-
-    override fun transformAction(action: Observable<Action>): Observable<out Action> =
-        action.doOnNext { Timber.v("Action: $it") }
-
-    override fun transformState(state: Observable<State>): Observable<out State> =
-        state.doOnNext { Timber.v("State: $it") }
 }

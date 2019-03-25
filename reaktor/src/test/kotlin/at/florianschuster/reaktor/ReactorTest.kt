@@ -1,12 +1,9 @@
 package at.florianschuster.reaktor
 
 import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.TestScheduler
-import org.amshove.kluent.shouldEqual
 import org.junit.Before
-import org.junit.BeforeClass
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
@@ -28,14 +25,16 @@ class ReactorTest {
         testObserver.let {
             it.assertNoErrors()
             it.values().let { result ->
-                result.count() shouldEqual 2
-                result[0] shouldEqual listOf("transformedState")
-                result[1] shouldEqual listOf(
-                    "action",
-                    "transformedAction",
-                    "mutation",
-                    "transformedMutation",
-                    "transformedState"
+                assert(result.count() == 2)
+                assert(result[0] == listOf("transformedState"))
+                assert(
+                    result[1] == listOf(
+                        "action",
+                        "transformedAction",
+                        "mutation",
+                        "transformedMutation",
+                        "transformedState"
+                    )
                 )
             }
         }
@@ -50,8 +49,8 @@ class ReactorTest {
         reactor.action.accept(Unit) // state: 2
 
         testObserver.values().let { result ->
-            result.count() shouldEqual 3
-            result shouldEqual listOf(0, 1, 2)
+            assert(result.count() == 3)
+            assert(result == listOf(0, 1, 2))
         }
     }
 
@@ -61,22 +60,31 @@ class ReactorTest {
         reactor.state
         reactor.action.accept(listOf("action"))
 
-        reactor.currentState shouldEqual listOf(
-            "action",
-            "transformedAction",
-            "mutation",
-            "transformedMutation",
-            "transformedState"
+        assert(
+            reactor.currentState == listOf(
+                "action",
+                "transformedAction",
+                "mutation",
+                "transformedMutation",
+                "transformedState"
+            )
         )
     }
 
     @Test
-    fun testLazyStateCreation() {
-
+    fun testStateIsCreatedWhenAccessAction() {
         val reactor = TestReactor()
         reactor.action.accept(listOf("action"))
 
-        reactor.currentState shouldEqual emptyList()
+        assert(
+            reactor.currentState == listOf(
+                "action",
+                "transformedAction",
+                "mutation",
+                "transformedMutation",
+                "transformedState"
+            )
+        )
     }
 
     @Test
@@ -92,8 +100,8 @@ class ReactorTest {
         reactor.action.accept(Unit)
 
         testObserver.values().let { result ->
-            result.size shouldEqual 6
-            result shouldEqual listOf(0, 1, 2, 3, 4, 5)
+            assert(result.size == 6)
+            assert(result == listOf(0, 1, 2, 3, 4, 5))
         }
     }
 
@@ -109,7 +117,7 @@ class ReactorTest {
         reactor.action.accept(Unit)
         reactor.action.accept(Unit)
 
-        testObserver.values() shouldEqual listOf(0, 1, 2, 3, 4, 5)
+        assert(testObserver.values() == listOf(0, 1, 2, 3, 4, 5))
     }
 
     @Test
@@ -143,24 +151,14 @@ class ReactorTest {
         testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
         reactor.action.accept(StopwatchReactor.Action.Stop)
 
-        reactor.currentState shouldEqual 10 //2+3+4+1
+        assert(reactor.currentState == 10) //2+3+4+1
 
         RxJavaPlugins.reset()
     }
 }
 
 
-abstract class BaseTestReactor<A : Any, M : Any, S : Any>(
-    final override val initialState: S
-) : Reactor<A, M, S> {
-    override var currentState: S = initialState
-    final override var disposables = CompositeDisposable()
-    final override val action = ActionRelay<A>()
-    final override val state by lazy { createStateStream() }
-}
-
-
-private class TestReactor : BaseTestReactor<List<String>, List<String>, List<String>>(ArrayList()) {
+private class TestReactor : DefaultReactor<List<String>, List<String>, List<String>>(ArrayList()) {
     // 1. ["action"] + ["transformedAction"]
     override fun transformAction(action: Observable<List<String>>): Observable<List<String>> {
         return action.map { it + "transformedAction" }
@@ -177,8 +175,8 @@ private class TestReactor : BaseTestReactor<List<String>, List<String>, List<Str
     }
 
     // 4. [] + ["action", "transformedAction", "mutation", "transformedMutation"]
-    override fun reduce(state: List<String>, mutation: List<String>): List<String> {
-        return state + mutation
+    override fun reduce(previousState: List<String>, mutation: List<String>): List<String> {
+        return previousState + mutation
     }
 
     // 5. ["action", "transformedAction", "mutation", "transformedMutation"] + ["transformedState"]
@@ -188,7 +186,7 @@ private class TestReactor : BaseTestReactor<List<String>, List<String>, List<Str
 }
 
 
-private class CounterReactor : BaseTestReactor<Unit, Unit, Int>(0) {
+private class CounterReactor : DefaultReactor<Unit, Unit, Int>(0) {
     var stateForTriggerError: Int? = null
     var stateForTriggerCompleted: Int? = null
 
@@ -204,11 +202,11 @@ private class CounterReactor : BaseTestReactor<Unit, Unit, Int>(0) {
         else -> Observable.just(action)
     }
 
-    override fun reduce(state: Int, mutation: Unit): Int = state + 1
+    override fun reduce(previousState: Int, mutation: Unit): Int = previousState + 1
 }
 
 
-private class StopwatchReactor : BaseTestReactor<StopwatchReactor.Action, Int, Int>(0) {
+private class StopwatchReactor : DefaultReactor<StopwatchReactor.Action, Int, Int>(0) {
     sealed class Action {
         object Start : Action()
         object Stop : Action()
@@ -223,5 +221,5 @@ private class StopwatchReactor : BaseTestReactor<StopwatchReactor.Action, Int, I
         is Action.Stop -> Observable.empty()
     }
 
-    override fun reduce(state: Int, mutation: Int): Int = state + mutation
+    override fun reduce(previousState: Int, mutation: Int): Int = previousState + mutation
 }

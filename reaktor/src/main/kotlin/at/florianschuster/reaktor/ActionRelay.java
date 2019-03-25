@@ -17,23 +17,26 @@ import java.util.concurrent.atomic.AtomicReference;
 public final class ActionRelay<T> extends Observable<T> implements Consumer<T> {
     private static final ActionDisposable[] EMPTY = new ActionDisposable[0];
     private final AtomicReference<ActionDisposable<T>[]> subscribers;
+    private AtomicReference<T> initialAction;
 
     @SuppressWarnings("unchecked")
     public ActionRelay() {
         subscribers = new AtomicReference<ActionDisposable<T>[]>(EMPTY);
+        initialAction = new AtomicReference<>();
+    }
+
+    public ActionRelay(T action) {
+        this();
+        if (action == null) throw new NullPointerException("Initial value must not be null.");
+        initialAction.set(action);
     }
 
     @Override
-    public void accept(@NonNull T value) {
-        if (value == null) throw new NullPointerException("Value must not be null.");
+    public void accept(@NonNull T action) {
+        if (action == null) throw new NullPointerException("Value must not be null.");
         ActionDisposable<T>[] currentSubscribers = subscribers.get();
-        if (currentSubscribers.length == 0) {
-            Exception e = new IllegalStateException("You are not subscribed to 'state' but are trying to publish an 'Action'.");
-            Reaktor.INSTANCE.handleError(e);
-        } else {
-            for (ActionDisposable<T> disposable : currentSubscribers) {
-                disposable.onNext(value);
-            }
+        for (ActionDisposable<T> disposable : currentSubscribers) {
+            disposable.onNext(action);
         }
     }
 
@@ -46,8 +49,11 @@ public final class ActionRelay<T> extends Observable<T> implements Consumer<T> {
         ActionDisposable<T> actionDisposable = new ActionDisposable<>(observer, this);
         observer.onSubscribe(actionDisposable);
         add(actionDisposable);
+        T initialValue = initialAction.get();
         if (actionDisposable.isDisposed()) {
             remove(actionDisposable);
+        } else if (initialValue != null) {
+            actionDisposable.onNext(initialValue);
         }
     }
 

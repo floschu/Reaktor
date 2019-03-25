@@ -1,0 +1,8 @@
+apply from: "$rootDir/library-module.gradle"
+
+dependencies {
+    implementation project(':reaktor')
+    implementation project(':reaktorandroid')
+    implementation deps.lifecycle
+    implementation deps.koin.values()
+}

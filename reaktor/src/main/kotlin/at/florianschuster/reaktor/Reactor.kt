@@ -3,7 +3,6 @@ package at.florianschuster.reaktor
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 
-
 /**
  * A Reactor is an UI-independent layer which manages the state of a view. The foremost role of a
  * [Reactor] is to separate control flow from a view. Every view has its corresponding [Reactor] and
@@ -37,17 +36,15 @@ interface Reactor<Action, Mutation, State> where Action : Any, Mutation : Any, S
     var currentState: State
 
     /**
-     * Commits mutation from the [Action]. This is the best place to perform side-effects such as
-     * async tasks.
+     * Transforms an [Action] to a [Mutation]. This is the place to perform side-effects such as async tasks.
      */
     fun mutate(action: Action): Observable<out Mutation> = Observable.empty()
 
     /**
-     * Generates a new state with the previous [State] and the [Action]. It should be purely functional
-     * so it should not perform any side-effects here. This method is called every time when
-     * the [Mutation] is committed.
+     * Generates a new state with the previous [State] and the [Mutation]. It should be purely functional
+     * so it should not perform any side-effects. This method is called every time a [Mutation] is committed.
      */
-    fun reduce(state: State, mutation: Mutation): State = state
+    fun reduce(previousState: State, mutation: Mutation): State = previousState
 
     /**
      * Transforms the [Action]. Use this function to combine with other observables. This method is
@@ -66,30 +63,4 @@ interface Reactor<Action, Mutation, State> where Action : Any, Mutation : Any, S
      * method is called once after the state stream is created.
      */
     fun transformState(state: Observable<State>): Observable<out State> = state
-
-    /**
-     * Creates the [State] stream by transforming the [ActionRelay] to a [State] observable.
-     */
-    fun createStateStream(): Observable<out State> {
-        val transformedAction: Observable<out Action> = transformAction(action)
-
-        val mutation: Observable<Mutation> = transformedAction.flatMap {
-            mutate(it).onErrorResumeNext { t: Throwable -> Reaktor.handleObservableError(t) }
-        }
-
-        val transformedMutation: Observable<out Mutation> = transformMutation(mutation)
-
-        val state: Observable<State> = transformedMutation
-            .scan(initialState) { state, mutate -> reduce(state, mutate) }
-            .onErrorResumeNext { t: Throwable -> Reaktor.handleObservableError(t) }
-            .startWith(initialState)
-
-        val transformedState = transformState(state)
-            .doOnNext { currentState = it }
-            .replay(1)
-
-        disposables.add(transformedState.connect())
-
-        return transformedState
-    }
 }

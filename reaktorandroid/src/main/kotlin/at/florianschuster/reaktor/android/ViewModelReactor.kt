@@ -4,9 +4,9 @@ import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
 import at.florianschuster.reaktor.ActionRelay
 import at.florianschuster.reaktor.Reactor
+import at.florianschuster.reaktor.createStateStream
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
-
 
 /**
  * Abstract Reactor implementing ViewModel.
@@ -22,22 +22,21 @@ abstract class ViewModelReactor<Action : Any, Mutation : Any, State : Any>(
 
     override var currentState: State = initialState
 
-    final override val disposables: CompositeDisposable by lazy { CompositeDisposable() }
-    final override val action: ActionRelay<Action> = ActionRelay()
-    final override val state: Observable<out State> by lazy {
-        val stateStream: Observable<out State> = createStateStream()
-        initialAction?.let(action::accept)
-        stateStream
-    }
+    final override val disposables: CompositeDisposable = CompositeDisposable()
+    private val _action: ActionRelay<Action> = if (initialAction != null) ActionRelay(initialAction) else ActionRelay()
+    final override val action: ActionRelay<Action>
+        get() {
+            state
+            return _action
+        }
+    final override val state: Observable<out State> by lazy { createStateStream(_action) }
 
     @CallSuper
     override fun onCleared() {
         super.onCleared()
         disposables.clear()
     }
-
 }
-
 
 /**
  * A simple ViewModel Reactor that can be used when there is no need for a Mutation.

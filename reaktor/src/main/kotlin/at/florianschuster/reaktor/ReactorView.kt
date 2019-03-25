@@ -19,7 +19,6 @@ interface ReactorView<R : Reactor<*, *, *>> {
      */
     val reactor: R
 
-
     /**
      * Binds a [Reactor] to a View.
      */
