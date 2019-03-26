@@ -4,7 +4,7 @@ import androidx.annotation.RestrictTo
 import io.reactivex.Observable
 
 /**
- * Object to handle Library initializations.
+ * Object to handle library initializations.
  */
 object Reaktor {
     private var crashInDebug: Boolean = true
