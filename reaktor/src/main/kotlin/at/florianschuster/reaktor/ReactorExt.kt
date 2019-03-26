@@ -21,5 +21,5 @@ fun <State : Any, SubState : Any> Observable<State>.changesFrom(mapper: (State) 
 /**
  * Creates an empty [Mutation] that performs a side effect that does not change the [State] of the [Reactor].
  */
-private fun <Mutation : Any> Reactor<*, Mutation, *>.emptyMutation(action: (() -> Unit)? = null): Observable<Mutation> =
+fun <Mutation : Any> Reactor<*, Mutation, *>.emptyMutation(action: (() -> Unit)? = null): Observable<Mutation> =
     Completable.fromAction { action?.invoke() }.toObservable()
