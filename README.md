@@ -74,7 +74,7 @@ When binding a `State` stream to a View, the `fun bind(...)` extension function 
 
 [Koin](https://github.com/InsertKoinIO/koin) is a lightweight dependency injection framework for Kotlin.
 
-The `androidkoin` module contains the simple extension functions for the `ViewModelReactor`. They are just renamed extension functions that can be used for more clarity when developing with the framework.
+The `androidkoin` module contains simple extension functions for the `ViewModelReactor`. They are just renamed extension functions that can be used for more clarity when developing with the framework.
 
 ## Examples
 
