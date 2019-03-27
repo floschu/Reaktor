@@ -26,7 +26,7 @@ abstract class ViewModelReactor<Action : Any, Mutation : Any, State : Any>(
     private val _action: ActionRelay<Action> = if (initialAction != null) ActionRelay(initialAction) else ActionRelay()
     final override val action: ActionRelay<Action>
         get() {
-            state
+            state // creates the state observable, when action is called without subscription to state
             return _action
         }
     final override val state: Observable<out State> by lazy { createStateStream(_action) }

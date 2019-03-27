@@ -21,7 +21,7 @@ abstract class DefaultReactor<Action : Any, Mutation : Any, State : Any>(
     private val _action: ActionRelay<Action> = if (initialAction != null) ActionRelay(initialAction) else ActionRelay()
     final override val action: ActionRelay<Action>
         get() {
-            state
+            state // creates the state observable, when action is called without subscription to state
             return _action
         }
     final override val state: Observable<out State> by lazy { createStateStream(_action) }
@@ -40,9 +40,9 @@ abstract class SimpleDefaultReactor<Action : Any, State : Any>(
 
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 fun <Action : Any, Mutation : Any, State : Any> Reactor<Action, Mutation, State>.createStateStream(
-    actionBackingFieldValue: ActionRelay<Action>? = null
+    actionBackingFieldValue: ActionRelay<Action>
 ): Observable<out State> {
-    val transformedAction: Observable<out Action> = transformAction(actionBackingFieldValue ?: action)
+    val transformedAction: Observable<out Action> = transformAction(actionBackingFieldValue)
 
     val mutation: Observable<Mutation> = transformedAction.flatMap {
         mutate(it).onErrorResumeNext { t: Throwable -> Reaktor.handleObservableError(t) }
@@ -53,7 +53,6 @@ fun <Action : Any, Mutation : Any, State : Any> Reactor<Action, Mutation, State>
     val state: Observable<State> = transformedMutation
         .scan(initialState, ::reduce)
         .onErrorResumeNext { t: Throwable -> Reaktor.handleObservableError(t) }
-        .startWith(initialState)
 
     val transformedState = transformState(state)
         .doOnNext { currentState = it }

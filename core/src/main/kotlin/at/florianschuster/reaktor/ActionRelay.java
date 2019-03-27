@@ -9,7 +9,6 @@ import io.reactivex.functions.Consumer;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-
 /**
  * Subject that only emits onNext events aka a Relay
  * Reference: https://github.com/JakeWharton/RxRelay/

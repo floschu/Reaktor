@@ -127,7 +127,6 @@ class ReactorTest {
         RxJavaPlugins.setComputationSchedulerHandler { testScheduler }
 
         val reactor = StopwatchReactor()
-        reactor.state
 
         reactor.action.accept(StopwatchReactor.Action.Start)
         testScheduler.advanceTimeBy(2, TimeUnit.SECONDS)
@@ -154,9 +153,47 @@ class ReactorTest {
 
         RxJavaPlugins.reset()
     }
+
+    @Test
+    fun testInitialAction() {
+        val reactor = TestReactor(listOf("initialAction"))
+        val testObserver = reactor.state.test()
+
+        reactor.action.accept(listOf("action"))
+
+        testObserver.values().let { result ->
+            assert(result.count() == 2)
+
+            assert(
+                result[0] == listOf(
+                    "initialAction",
+                    "transformedAction",
+                    "mutation",
+                    "transformedMutation",
+                    "transformedState"
+                )
+            )
+
+            assert(
+                result[1] == listOf(
+                    "initialAction",
+                    "transformedAction",
+                    "mutation",
+                    "transformedMutation",
+                    "action",
+                    "transformedAction",
+                    "mutation",
+                    "transformedMutation",
+                    "transformedState"
+                )
+            )
+        }
+    }
 }
 
-private class TestReactor : DefaultReactor<List<String>, List<String>, List<String>>(ArrayList()) {
+private class TestReactor(
+    initialAction: List<String>? = null
+) : DefaultReactor<List<String>, List<String>, List<String>>(ArrayList(), initialAction) {
     // 1. ["action"] + ["transformedAction"]
     override fun transformAction(action: Observable<List<String>>): Observable<List<String>> {
         return action.map { it + "transformedAction" }
