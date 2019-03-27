@@ -13,7 +13,7 @@ import org.koin.core.qualifier.Qualifier
 import org.koin.core.scope.Scope
 
 /**
- * Reactor DSL extension to declare a [Reactor] in a Koin [Module].
+ * [Reactor] DSL extension to declare a [Reactor] in a Koin [Module].
  */
 inline fun <reified R> Module.reactor(
     qualifier: Qualifier? = null,
