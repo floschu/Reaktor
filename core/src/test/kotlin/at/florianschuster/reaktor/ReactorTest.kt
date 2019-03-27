@@ -15,6 +15,14 @@ class ReactorTest {
     }
 
     @Test
+    fun testInitialStateOnlyEmittedOnce() {
+        val reactor = TestReactor()
+        val testObserver = reactor.state.test()
+
+        assert(testObserver.values().count() == 1)
+    }
+
+    @Test
     fun testEachMethodIsInvoked() {
         val reactor = TestReactor()
         val testObserver = reactor.state.test()
@@ -91,7 +99,7 @@ class ReactorTest {
         val reactor = CounterReactor()
         val testObserver = reactor.state.test()
 
-        reactor.stateForTriggerError = 2
+        reactor.stateIndexToTriggerError = 2
         reactor.action.accept(Unit)
         reactor.action.accept(Unit)
         reactor.action.accept(Unit)
@@ -109,7 +117,7 @@ class ReactorTest {
         val reactor = CounterReactor()
         val testObserver = reactor.state.test()
 
-        reactor.stateForTriggerCompleted = 2
+        reactor.stateIndexToTriggerCompleted = 2
         reactor.action.accept(Unit)
         reactor.action.accept(Unit)
         reactor.action.accept(Unit)
@@ -156,31 +164,15 @@ class ReactorTest {
 
     @Test
     fun testInitialAction() {
-        val reactor = TestReactor(listOf("initialAction"))
+        val reactor = TestReactor(initialAction = listOf("initialAction"))
         val testObserver = reactor.state.test()
 
-        reactor.action.accept(listOf("action"))
-
         testObserver.values().let { result ->
-            assert(result.count() == 2)
+            assert(result.count() == 1)
 
             assert(
                 result[0] == listOf(
                     "initialAction",
-                    "transformedAction",
-                    "mutation",
-                    "transformedMutation",
-                    "transformedState"
-                )
-            )
-
-            assert(
-                result[1] == listOf(
-                    "initialAction",
-                    "transformedAction",
-                    "mutation",
-                    "transformedMutation",
-                    "action",
                     "transformedAction",
                     "mutation",
                     "transformedMutation",
@@ -192,8 +184,9 @@ class ReactorTest {
 }
 
 private class TestReactor(
+    initialState: List<String> = emptyList(),
     initialAction: List<String>? = null
-) : DefaultReactor<List<String>, List<String>, List<String>>(ArrayList(), initialAction) {
+) : DefaultReactor<List<String>, List<String>, List<String>>(initialState, initialAction) {
     // 1. ["action"] + ["transformedAction"]
     override fun transformAction(action: Observable<List<String>>): Observable<List<String>> {
         return action.map { it + "transformedAction" }
@@ -221,15 +214,15 @@ private class TestReactor(
 }
 
 private class CounterReactor : DefaultReactor<Unit, Unit, Int>(0) {
-    var stateForTriggerError: Int? = null
-    var stateForTriggerCompleted: Int? = null
+    var stateIndexToTriggerError: Int? = null
+    var stateIndexToTriggerCompleted: Int? = null
 
     override fun mutate(action: Unit): Observable<Unit> = when (currentState) {
-        stateForTriggerError -> {
+        stateIndexToTriggerError -> {
             val results = arrayOf(Observable.just(action), Observable.error(Error()))
             Observable.concat(results.asIterable())
         }
-        stateForTriggerCompleted -> {
+        stateIndexToTriggerCompleted -> {
             val results = arrayOf(Observable.just(action), Observable.empty())
             Observable.concat(results.asIterable())
         }
