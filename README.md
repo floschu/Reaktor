@@ -45,6 +45,10 @@ dependencies {
 
 For this you should hit up the [ReactorKit Repo Readme](https://github.com/ReactorKit/ReactorKit/blob/master/README.md). It is very extensive and since Swift 4 and Kotlin are much alike you will feel right at home! They also have nice graphics.
 
+<p align="center">
+  <img alt="flow" src="https://github.com/floschu/Reaktor/blob/master/reactor_diagram_full.png">
+</p>
+
 ### Reaktor
 
 A Reactor has to implement the `Reactor<Action, Mutation, State>` interface. Do not forget to clear the `CompositeDisposable` in the `Reactor` after you are done with it. A View that binds to a Reactor has to implement the interface `ReactorView`.
