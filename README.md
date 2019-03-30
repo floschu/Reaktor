@@ -79,11 +79,15 @@ class ExampleReactor() : Reactor<ExampleReactor.Action, ExampleReactor.Mutation,
 }
 ```
 
-A `ReactorView` can only emit actions and a `Reactor` can only emit states, thus unidirectional observable stream paradigm is abided.
-
 <p align="center">
   <img alt="flow" src="https://github.com/floschu/Reaktor/blob/master/reactor_diagram_full.png">
 </p>
+
+* `fun mutate(Action)` receives an *Action* and returns an *Observable\<Mutation\>*. All asynchronous side effects are executed here
+* `fun reduce(State, Mutation)` receives the previous *State* and *Mutation* and returns the newly generated *State* synchronously
+* `fun transform(Mutation)` can be used to transform a global state, such as for example a user session into a *Mutation*
+
+A `ReactorView` can only emit actions and a `Reactor` can only emit states, thus unidirectional observable stream paradigm is abided.
 
 ### Reaktor
 
