@@ -64,18 +64,18 @@ A Reactor must implement the `Reactor` interface:
 ```kotlin
 class ExampleReactor() : Reactor<ExampleReactor.Action, ExampleReactor.Mutation, ExampleReactor.State> {
  sealed class Action {
-  data class ExampleAction(val example: String): Action()
+  data class ExampleAction(val actionValue: String): Action()
  }
  
  sealed class Mutation {
-  data class ExampleAction(val example: String): Mutation()
+  data class ExampleMutation(val mutationResult: String): Mutation()
  }
  
  data class State(
-  val example: String
+  val stateValue: String
  )
  
- val initialState = State(example = "test")
+ val initialState = State(stateValue = "initialValue")
 }
 ```
 
