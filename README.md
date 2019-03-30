@@ -43,8 +43,6 @@ dependencies {
 
 ### General Concept and Unidirectional Data Flow
 
-For this you should hit up the [ReactorKit Repo Readme](https://github.com/ReactorKit/ReactorKit/blob/master/README.md). It is very extensive and since Swift 4 and Kotlin are much alike you will feel right at home! They also have nice graphics.
-
 A `ReactorView` displays data. In Android terms, a `ReactorView` could be an `Activity`, a `Fragment`, a `ViewGroup` or a `View`. A `ReactorView` should not have any business related logic but rather delegate all user actions to the `Reactor` and render its state.  
 A View must implement the `ReactorView` interface:
 
@@ -83,11 +81,13 @@ class ExampleReactor() : Reactor<ExampleReactor.Action, ExampleReactor.Mutation,
   <img alt="flow" src="https://github.com/floschu/Reaktor/blob/master/reactor_diagram_full.png">
 </p>
 
-* `fun mutate(Action)` receives an *Action* and returns an *Observable\<Mutation\>*. All asynchronous side effects are executed here
+* `fun mutate(Action)` receives an *Action* and returns an `Observable<Mutation>`. All asynchronous side effects are executed here
 * `fun reduce(State, Mutation)` receives the previous *State* and *Mutation* and returns the newly generated *State* synchronously
 * `fun transform(Mutation)` can be used to transform a global state, such as for example a user session into a *Mutation*
 
 A `ReactorView` can only emit actions and a `Reactor` can only emit states, thus unidirectional observable stream paradigm is abided.
+
+For more in depth info, you should hit up the [ReactorKit Repo Readme](https://github.com/ReactorKit/ReactorKit/blob/master/README.md). It is very extensive and since Swift 4 and Kotlin are much alike you will feel right at home! They also have nice graphics.
 
 ### Reaktor
 
