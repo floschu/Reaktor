@@ -45,37 +45,53 @@ dependencies {
 
 As seen in the previous graphic, there are two actors that interact with each other: the **view** and the **reactor**.
 
+#### view
+
 A **view** displays data. In Android terms, a **view** could be an `Activity`, a `Fragment`, a `ViewGroup` or a `View`. A **view** should not have any business related logic but rather delegate all user actions to the **reactor** and render its state.  
 A **view** must implement the `ReactorView` interface:
 
 ```kotlin
 class ExampleFragment : Fragment(), ReactorView<ExampleReactor> {
   override val reactor = ExampleReactor()
+  
   override val disposables = CompositeDisposable()
+  
   override fun bind(reactor: ExampleReactor) {
-    // bind action and render state
+    // bind actions (view --> reactor)
+    buttonSetValue.clicks()
+        .map { ExampleReactor.Action.SetValue(2) }
+        .bind(to = reactor.action)
+        .let(disposables::add)
+    
+    // render state (reactor --> view)
+    reactor.state.changesFrom { it.value }
+        .map { "$it" }
+        .bind(to = textViewValue::setText)
+        .let(disposables::add)
   }
 }
 ```
 
-A **reactor** is an UI-independent class that manages the state of the view and handles business logic. The **reactor** has no dependency on the **view**, which makes it easily testable.  
+#### reactor
+
+A **reactor** is an UI-independent class that manages the state of the view and handles business logic or redirects to services that handle business logic. The **reactor** has no dependency on the **view**, which makes it easily testable.  
 A Reactor must implement the `Reactor` interface:
 
 ```kotlin
 class ExampleReactor() : Reactor<ExampleReactor.Action, ExampleReactor.Mutation, ExampleReactor.State> {
  sealed class Action {
-  data class ExampleAction(val actionValue: String): Action()
+  data class SetValue(val value: Int) : Action()
  }
  
  sealed class Mutation {
-  data class ExampleMutation(val mutationResult: String): Mutation()
+  data class SetMutatedValue(val value: Int) : Mutation()
  }
  
  data class State(
-  val stateValue: String
+  val value: Int
  )
  
- val initialState = State(stateValue = "initialValue")
+ val initialState = State(value = 0)
 }
 ```
 
