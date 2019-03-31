@@ -152,7 +152,7 @@ Visit my [Website](https://florianschuster.at/).
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="define_reaktor"></string>
+    <string name="define_reaktor" />
     <string name="library_reaktor_author">Florian Schuster</string>
     <string name="library_reaktor_authorWebsite">https://florianschuster.at</string>
     <string name="library_reaktor_libraryName">Reaktor</string>
