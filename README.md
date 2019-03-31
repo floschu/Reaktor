@@ -43,8 +43,10 @@ dependencies {
 
 ### General Concept and Unidirectional Data Flow
 
-A `ReactorView` displays data. In Android terms, a `ReactorView` could be an `Activity`, a `Fragment`, a `ViewGroup` or a `View`. A `ReactorView` should not have any business related logic but rather delegate all user actions to the `Reactor` and render its state.  
-A View must implement the `ReactorView` interface:
+As seen in the previous graphic, there are two actors that interact with each other: the **view** and the **reactor**.
+
+A **view** displays data. In Android terms, a **view** could be an `Activity`, a `Fragment`, a `ViewGroup` or a `View`. A **view** should not have any business related logic but rather delegate all user actions to the **reactor** and render its state.  
+A **view** must implement the `ReactorView` interface:
 
 ```kotlin
 class ExampleFragment : Fragment(), ReactorView<ExampleReactor> {
@@ -56,7 +58,7 @@ class ExampleFragment : Fragment(), ReactorView<ExampleReactor> {
 }
 ```
 
-A `Reactor` is an UI-independent class that manages the state of the view and handles business logic. The `Reactor` has no dependency on the view, which makes it easily testable.  
+A **reactor** is an UI-independent class that manages the state of the view and handles business logic. The **reactor** has no dependency on the **view**, which makes it easily testable.  
 A Reactor must implement the `Reactor` interface:
 
 ```kotlin
@@ -82,35 +84,35 @@ class ExampleReactor() : Reactor<ExampleReactor.Action, ExampleReactor.Mutation,
 </p>
 
 * `fun mutate(Action)` receives an *Action* and returns an `Observable<Mutation>`. All asynchronous side effects are executed here
-* `fun reduce(State, Mutation)` receives the previous *State* and *Mutation* and returns the newly generated *State* synchronously
+* `fun reduce(State, Mutation)` takes the previous *State*, receives a *Mutation* and returns the newly generated *State* synchronously
 * `fun transform(Mutation)` can be used to transform a global state, such as for example a user session into a *Mutation*
 
-A `ReactorView` can only emit actions and a `Reactor` can only emit states, thus unidirectional observable stream paradigm is abided.
+A **view** can only emit actions and a **reactor** can only emit states, thus unidirectional observable stream paradigm is abided.
 
 For more in depth info, you should hit up the [ReactorKit Repo Readme](https://github.com/ReactorKit/ReactorKit/blob/master/README.md). It is very extensive and since Swift 4 and Kotlin are much alike you will feel right at home! They also have nice graphics.
 
 ### Reaktor
 
-The `DefaultReactor` is a default implementation for a `Reactor` that handles creation for all variables but not the clearing of the `CompositeDisposable`. Do *not* forget to clear the `CompositeDisposable` in the `Reactor` after you are done with it.
+The `DefaultReactor` is a default implementation for a **reactor** that handles creation for all variables but not the clearing of the `CompositeDisposable`. Do *not* forget to clear the `CompositeDisposable` in the **reactor** after you are done with it.
 
 The `DefaultReactor` also catches and ignores all errors emitted in `fun mutate()` and `fun reduce()` in release builds to keep the `state` stream going. You can change this behavior for debug builds and also attach an error handler with `Reaktor.handleErrorsWith(...)`.  
 
 ### Reaktor-Android
 
-When binding the `Reactor` to an `Activity` or a `Fragment`, their life cycles have to be taken into account.  
-All views have to be laid out before the bind happens, so you should not call `fun bind(Reactor)` before:
+When binding the **reactor** to an `Activity` or a `Fragment`, their life cycles have to be taken into account.  
+All Android views have to be laid out before the bind happens, so you should not call `fun bind(Reactor)` before:
 
 * Activity: after `setContentView(Int)` in `fun onCreate(Bundle)`
 * Fragment: `fun onViewCreated(View, Bundle)`
 
-Also do not forget to dispose the View's `CompositeDisposable`. I propose to do this in: 
+Also do not forget to dispose the **view**'s `CompositeDisposable`. I propose to do this in: 
 
 * Activity: `fun onDestroy()`
 * Fragment: `fun onDestroyView()`
 
-The `ViewModelReactor` is a default implementation for a `Reactor` that uses the [Android Architecture ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) and thus handles the clearing of the `CompositeDisposable` in `fun onCleared()`.
+The `ViewModelReactor` is a default implementation for a **reactor** that uses the [Android Architecture ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) and thus handles the clearing of the `CompositeDisposable` in `fun onCleared()`.
 
-When binding a `State` stream to a View, the `fun bind(...)` extension function can come in handy since it observes on the `AndroidSchedulers.mainThread()` and also logs errors.
+When binding a `state` stream to a **view**, the `fun bind(...)` extension function can come in handy since it observes on the `AndroidSchedulers.mainThread()` and also logs errors.
 
 ### Reaktor-Android-Koin
 
