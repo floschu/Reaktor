@@ -14,7 +14,6 @@ import at.florianschuster.reaktor.android.ViewModelReactor
 import at.florianschuster.reaktor.android.bind
 import at.florianschuster.reaktor.android.viewModelReactor
 import at.florianschuster.reaktor.changesFrom
-import at.florianschuster.reaktor.consume
 import com.jakewharton.rxbinding3.recyclerview.scrollEvents
 import com.jakewharton.rxbinding3.view.visibility
 import com.jakewharton.rxbinding3.widget.textChanges
@@ -50,15 +49,16 @@ class GithubFragment : Fragment(), ReactorView<GithubReactor> {
             .skipInitialValue()
             .debounce(300, TimeUnit.MILLISECONDS)
             .filter { it.length >= 2 }
-            .map { GithubReactor.Action.UpdateQuery(it.toString()) }
-            .consume(with = reactor)
+            .map { it.toString() }
+            .map { GithubReactor.Action.UpdateQuery(it) }
+            .bind(to = reactor.action)
             .let(disposables::add)
 
         rvRepos.scrollEvents()
             .sample(500, TimeUnit.MILLISECONDS)
             .filter { it.view.shouldLoadMore() }
             .map { GithubReactor.Action.LoadNextPage }
-            .consume(with = reactor)
+            .bind(to = reactor.action)
             .let(disposables::add)
 
         // state

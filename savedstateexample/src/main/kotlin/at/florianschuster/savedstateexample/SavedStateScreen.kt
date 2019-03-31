@@ -7,7 +7,6 @@ import at.florianschuster.reaktor.android.ViewModelReactor
 import at.florianschuster.reaktor.android.bind
 import at.florianschuster.reaktor.android.viewModelReactor
 import at.florianschuster.reaktor.changesFrom
-import at.florianschuster.reaktor.consume
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.view.visibility
 import io.reactivex.Observable
@@ -36,12 +35,12 @@ class SavedStateActivity : AppCompatActivity(), ReactorView<SaveStateReactor> {
         // action
         btnIncrease.clicks()
             .map { SaveStateReactor.Action.Increase }
-            .consume(with = reactor)
+            .bind(to = reactor.action)
             .let(disposables::add)
 
         btnDecrease.clicks()
             .map { SaveStateReactor.Action.Decrease }
-            .consume(with = reactor)
+            .bind(to = reactor.action)
             .let(disposables::add)
 
         // state

@@ -7,7 +7,6 @@ import at.florianschuster.reaktor.android.ViewModelReactor
 import at.florianschuster.reaktor.android.bind
 import at.florianschuster.reaktor.android.viewModelReactor
 import at.florianschuster.reaktor.changesFrom
-import at.florianschuster.reaktor.consume
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.view.visibility
 import io.reactivex.Observable
@@ -32,12 +31,12 @@ class CounterActivity : AppCompatActivity(), ReactorView<CounterReactor> {
         // action
         btnIncrease.clicks()
             .map { CounterReactor.Action.Increase }
-            .consume(with = reactor)
+            .bind(to = reactor.action)
             .let(disposables::add)
 
         btnDecrease.clicks()
             .map { CounterReactor.Action.Decrease }
-            .consume(with = reactor)
+            .bind(to = reactor.action)
             .let(disposables::add)
 
         // state
@@ -79,12 +78,12 @@ class CounterReactor(
     override fun mutate(action: Action): Observable<out Mutation> = when (action) {
         is Action.Increase -> Observable.concat(
             Observable.just(Mutation.SetLoading(true)),
-            Observable.just(Mutation.IncreaseValue).delay(500, TimeUnit.MILLISECONDS),
+            Observable.just(Mutation.IncreaseValue).delay(1000, TimeUnit.MILLISECONDS),
             Observable.just(Mutation.SetLoading(false))
         )
         is Action.Decrease -> Observable.concat(
             Observable.just(Mutation.SetLoading(true)),
-            Observable.just(Mutation.DecreaseValue).delay(500, TimeUnit.MILLISECONDS),
+            Observable.just(Mutation.DecreaseValue).delay(1000, TimeUnit.MILLISECONDS),
             Observable.just(Mutation.SetLoading(false))
         )
     }
