@@ -26,7 +26,7 @@ inline fun <reified R> Module.reactor(
  */
 inline fun <L : LifecycleOwner, reified R> L.reactor(
     qualifier: Qualifier? = null,
-    scope: Scope = Scope.GLOBAL,
+    scope: Scope? = null,
     noinline parameters: ParametersDefinition? = null
 ): Lazy<R> where R : Reactor<*, *, *>, R : ViewModel = viewModel(qualifier, scope, parameters)
 
@@ -35,6 +35,6 @@ inline fun <L : LifecycleOwner, reified R> L.reactor(
  */
 inline fun <reified R> LifecycleOwner.getReactor(
     qualifier: Qualifier? = null,
-    scope: Scope = Scope.GLOBAL,
+    scope: Scope? = null,
     noinline parameters: ParametersDefinition? = null
 ): R where R : Reactor<*, *, *>, R : ViewModel = getViewModel(qualifier, scope, parameters)
