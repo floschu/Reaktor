@@ -2,7 +2,7 @@ apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
     ext.config = [
-            version          : "1.0.4",
+            version          : "1.0.5",
 
             targetSdkVersion : 28,
             minSdkVersion    : 14,

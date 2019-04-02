@@ -2,7 +2,6 @@ package at.florianschuster.reaktor
 
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.disposables.Disposable
 
 /**
  * Maps changes from a [State] Observable and only emits those that are distinct from their immediate predecessors.

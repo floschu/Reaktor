@@ -1,6 +1,6 @@
 webUrl = https://github.com/floschu/Reaktor
 gitUrl = https://github.com/floschu/Reaktor.git
 groupId = at.florianschuster.reaktor
-id = androidkoin
+id = reaktor-android-koin
 description = Android Koin Extensions for Reaktor, a framework for a reactive and unidirectional application architecture.
 name = Reaktor-Android Koin
