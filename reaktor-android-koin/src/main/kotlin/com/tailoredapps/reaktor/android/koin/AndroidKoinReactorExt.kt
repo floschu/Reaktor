@@ -1,4 +1,4 @@
-package com.tailoredapps.reaktor.koin
+package com.tailoredapps.reaktor.android.koin
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel

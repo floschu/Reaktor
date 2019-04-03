@@ -1,1 +1,1 @@
-include ':core', ':android', ':counterexample', ':githubexample', ':savedstateexample', ':androidkoin'
+include ':reaktor', ':reaktor-android', ':reaktor-android-koin', ':counterexample', ':githubexample', ':savedstateexample'

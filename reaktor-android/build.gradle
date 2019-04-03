@@ -1,7 +1,7 @@
 apply from: "$rootDir/library-module.gradle"
 
 dependencies {
-    implementation project(':core')
+    implementation project(':reaktor')
     implementation deps.lifecycle
     implementation deps.rxandroid
 }
