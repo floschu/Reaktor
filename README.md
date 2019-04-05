@@ -93,7 +93,7 @@ class ExampleReactor() : Reactor<ExampleReactor.Action, ExampleReactor.Mutation,
   val value: Int
  )
  
- val initialState = State(value = 0)
+ override val initialState = State(value = 0)
 }
 ```
 
