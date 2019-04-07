@@ -1,6 +1,6 @@
 # Reaktor
 
-![Reaktor Version](https://img.shields.io/badge/Reaktor-1.0.6-red.svg) ![minSdk](https://img.shields.io/badge/minSdk-14-green.svg)
+![Reaktor Version](https://img.shields.io/badge/Reaktor-1.0.7-red.svg) ![minSdk](https://img.shields.io/badge/minSdk-14-green.svg)
 
 Reaktor is a framework for a reactive and unidirectional Kotlin application architecture.  
 It is a Kotlin port of the [ReaktorKit](https://github.com/ReactorKit/ReactorKit/) Swift concept.
@@ -19,19 +19,20 @@ allprojects {
 }
 
 dependencies {
-    def reaktorVersion = '1.0.6'
-    
-    implementation "at.florianschuster.reaktor:reaktor-core:$reaktorVersion"
+    /**
+    * Core. Kotlin only dependency.
+    */
+    implementation "at.florianschuster.reaktor:reaktor-core:$version"
     
     /**
      * Android (AAC) Extensions for Reactor. See: Reaktor-Android
      */
-    implementation "at.florianschuster.reaktor:reaktor-android:$reaktorVersion"
+    implementation "at.florianschuster.reaktor:reaktor-android:$version"
     
     /**
      * Android (AAC) Koin Extensions for Reactor. See: Reaktor-Android-Koin
      */
-    implementation "at.florianschuster.reaktor:reaktor-android-koin:$reaktorVersion"
+    implementation "at.florianschuster.reaktor:reaktor-android-koin:$version"
 }
 ```
 
@@ -148,25 +149,6 @@ The `androidkoin` module contains simple extension functions to inject a `ViewMo
 ## Author
 
 Visit my [Website](https://florianschuster.at/).
-
-## AboutLibraries
-
-``` xml
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="define_reaktor" />
-    <string name="library_reaktor_author">Florian Schuster</string>
-    <string name="library_reaktor_authorWebsite">https://florianschuster.at</string>
-    <string name="library_reaktor_libraryName">Reaktor</string>
-    <string name="library_reaktor_libraryDescription">Reaktor is a framework for a reactive and unidirectional application architecture.</string>
-    <string name="library_reaktor_libraryWebsite">https://github.com/floschu/Reaktor</string>
-    <string name="library_reaktor_libraryVersion">1.0.6</string>
-    <string name="library_reaktor_isOpenSource">true</string>
-    <string name="library_reaktor_repositoryLink">https://github.com/floschu/Reaktor.git</string>
-    <string name="library_reaktor_classPath">at.florianschuster.reaktor</string>
-    <string name="library_reaktor_licenseId">apache_2_0</string>
-</resources>
-```
 
 ## License
 
