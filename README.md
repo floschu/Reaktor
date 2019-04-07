@@ -162,7 +162,7 @@ Visit my [Website](https://florianschuster.at/).
     <string name="library_reaktor_libraryWebsite">https://github.com/floschu/Reaktor</string>
     <string name="library_reaktor_libraryVersion">1.0.6</string>
     <string name="library_reaktor_isOpenSource">true</string>
-    <string name="library_reaktor_repositoryLink">https://github.com/floschu/Reaktor</string>
+    <string name="library_reaktor_repositoryLink">https://github.com/floschu/Reaktor.git</string>
     <string name="library_reaktor_classPath">at.florianschuster.reaktor</string>
     <string name="library_reaktor_licenseId">apache_2_0</string>
 </resources>
