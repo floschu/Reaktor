@@ -16,7 +16,7 @@ interface ReactorView<R : Reactor<*, *, *>> {
     /**
      * The [Reactor] that binds to the View.
      */
-    val reactor: R
+    val reactor: R?
 
     /**
      * Binds a [Reactor] to a View.

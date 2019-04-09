@@ -1,6 +1,6 @@
 # Reaktor
 
-![Reaktor Version](https://img.shields.io/badge/Reaktor-1.0.7-red.svg) ![minSdk](https://img.shields.io/badge/minSdk-14-green.svg)
+![Reaktor Version](https://img.shields.io/badge/Reaktor-1.0.8-red.svg) ![minSdk](https://img.shields.io/badge/minSdk-14-green.svg)
 
 Reaktor is a framework for a reactive and unidirectional Kotlin application architecture.  
 It is a Kotlin port of the [ReaktorKit](https://github.com/ReactorKit/ReactorKit/) Swift concept.
