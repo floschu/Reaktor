@@ -22,8 +22,4 @@ dokka {
     outputDirectory = "$buildDir/javadoc"
 }
 
-dependencies {
-    implementation deps.kotlin
-}
-
 apply from: "$rootDir/deploy.gradle"

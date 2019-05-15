@@ -2,7 +2,7 @@ apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
     ext.config = [
-            version          : "1.0.9",
+            version          : "1.0.10",
 
             targetSdkVersion : 28,
             minSdkVersion    : 14,
@@ -10,7 +10,7 @@ buildscript {
     ]
 
     ext.versions = [
-            kotlin   : "1.3.30",
+            kotlin   : "1.3.31",
             rxBinding: "3.0.0-alpha2",
             retrofit : "2.5.0",
             koin     : '2.0.0-rc-3'
@@ -19,7 +19,7 @@ buildscript {
     ext.deps = [
             kotlin          : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
 
-            annotations     : "androidx.annotation:annotation:1.1.0-alpha02",
+            annotations     : "androidx.annotation:annotation:1.1.0-rc01",
             appcompat       : "androidx.appcompat:appcompat:1.0.2",
             lifecycle       : "android.arch.lifecycle:extensions:2.1.0-rc01",
 

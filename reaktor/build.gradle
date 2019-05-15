@@ -1,7 +1,8 @@
 apply from: "$rootDir/library-module.gradle"
 
 dependencies {
-    implementation deps.annotations
-    implementation deps.rxjava
+    api deps.kotlin
+    api deps.annotations
+    api deps.rxjava
     testImplementation deps.junit
 }
