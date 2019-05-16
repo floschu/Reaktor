@@ -40,6 +40,15 @@ install {
                 url artifact.webUrl
             }
         }
+        pom.withXml {
+            def dependenciesNode = asNode().appendNode('dependencies')
+            configurations.api.allDependencies.withType(ModuleDependency) { ModuleDependency dp ->
+                def dependencyNode = dependenciesNode.appendNode('dependency')
+                dependencyNode.appendNode('groupId', dp.group)
+                dependencyNode.appendNode('artifactId', dp.name)
+                dependencyNode.appendNode('version', dp.version)
+            }
+        }
     }
 }
 
