@@ -8,7 +8,7 @@
         application architecture.
     </string>
     <string name="library_reaktor_libraryWebsite">https://github.com/floschu/Reaktor</string>
-    <string name="library_reaktor_libraryVersion">1.0.11</string>
+    <string name="library_reaktor_libraryVersion">1.0.12</string>
     <string name="library_reaktor_isOpenSource">true</string>
     <string name="library_reaktor_repositoryLink">https://github.com/floschu/Reaktor.git</string>
     <string name="library_reaktor_classPath">at.florianschuster.reaktor</string>

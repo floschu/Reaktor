@@ -17,8 +17,5 @@ android {
 }
 
 dependencies {
-    implementation project(':reaktor')
     implementation project(':reaktor-android')
-
-    implementation deps.kotlin
 }
