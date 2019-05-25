@@ -134,6 +134,14 @@ The `ViewModelReactor` is a default implementation for a **reactor** that uses t
 
 When binding a `state` stream to a **view**, the `fun bind(...)` extension function can come in handy since it observes on the `AndroidSchedulers.mainThread()` and also logs errors.
 
+This module also contains an extension function that exposes the **reactor** `state` as a `LiveData<State>` object:
+
+``` kotlin
+reactor.liveDataState().observe(this, Observer { state ->
+    ...
+}
+```
+
 ### Reaktor-Android-Koin
 
 [Koin](https://github.com/InsertKoinIO/koin) is a lightweight dependency injection framework for Kotlin.
