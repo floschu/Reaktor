@@ -2,6 +2,5 @@ apply from: "$rootDir/library-module.gradle"
 
 dependencies {
     api project(':reaktor-android')
-    implementation deps.lifecycle
     implementation deps.koin.values()
 }

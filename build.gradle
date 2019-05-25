@@ -2,7 +2,7 @@ apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
     ext.config = [
-            version          : "1.0.12",
+            version          : "1.0.13",
 
             targetSdkVersion : 28,
             minSdkVersion    : 14,
@@ -10,18 +10,23 @@ buildscript {
     ]
 
     ext.versions = [
-            kotlin   : "1.3.31",
-            rxBinding: "3.0.0-alpha2",
-            retrofit : "2.5.0",
-            koin     : '2.0.0-rc-3'
+            kotlin   : '1.3.31',
+            rxBinding: '3.0.0-alpha2',
+            retrofit : '2.5.0',
+            koin     : '2.0.0-rc-3',
+            lifecycle: '2.0.0',
     ]
 
     ext.deps = [
-            kotlin          : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
+            kotlin          : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin",
 
             annotations     : "androidx.annotation:annotation:1.1.0-rc01",
             appcompat       : "androidx.appcompat:appcompat:1.0.2",
-            lifecycle       : "android.arch.lifecycle:extensions:2.1.0-rc01",
+
+            lifecycle       : [
+                    extensions: "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle",
+                    rx        : "androidx.lifecycle:lifecycle-reactivestreams-ktx:$versions.lifecycle",
+            ],
 
             constraintlayout: "androidx.constraintlayout:constraintlayout:1.1.3",
             recyclerview    : "androidx.recyclerview:recyclerview:1.0.0",
@@ -30,20 +35,20 @@ buildscript {
             rxandroid       : "io.reactivex.rxjava2:rxandroid:2.1.1",
             rxbinding       : [
                     core        : "com.jakewharton.rxbinding3:rxbinding:3.0.0-alpha2",
-                    appcompat   : "com.jakewharton.rxbinding3:rxbinding-appcompat:${versions.rxBinding}",
-                    recyclerview: "com.jakewharton.rxbinding3:rxbinding-recyclerview:${versions.rxBinding}"
+                    appcompat   : "com.jakewharton.rxbinding3:rxbinding-appcompat:$versions.rxBinding",
+                    recyclerview: "com.jakewharton.rxbinding3:rxbinding-recyclerview:$versions.rxBinding"
             ],
 
             retrofit        : [
-                    core     : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
-                    converter: "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
-                    adapter  : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}"
+                    core     : "com.squareup.retrofit2:retrofit:$versions.retrofit",
+                    converter: "com.squareup.retrofit2:converter-gson:$versions.retrofit",
+                    adapter  : "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
             ],
 
             koin            : [
-                    core     : "org.koin:koin-core:${versions.koin}",
-                    androidx : "org.koin:koin-android:${versions.koin}",
-                    viewmodel: "org.koin:koin-androidx-viewmodel:${versions.koin}"
+                    core     : "org.koin:koin-core:$versions.koin",
+                    androidx : "org.koin:koin-android:$versions.koin",
+                    viewmodel: "org.koin:koin-androidx-viewmodel:$versions.koin"
             ],
 
             gson            : "com.google.code.gson:gson:2.8.5",
@@ -58,8 +63,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.21.0'
         classpath 'org.jetbrains.dokka:dokka-android-gradle-plugin:0.9.18'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
