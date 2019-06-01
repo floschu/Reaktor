@@ -48,7 +48,8 @@ buildscript {
             koin            : [
                     core     : "org.koin:koin-core:$versions.koin",
                     androidx : "org.koin:koin-android:$versions.koin",
-                    viewmodel: "org.koin:koin-androidx-viewmodel:$versions.koin"
+                    viewmodel: "org.koin:koin-androidx-viewmodel:$versions.koin",
+                    test     : "org.koin:koin-test:$versions.koin",
             ],
 
             gson            : "com.google.code.gson:gson:2.8.5",

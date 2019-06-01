@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.tailoredapps.reaktor.koin"/>
+<manifest package="at.florianschuster.reaktor.android.koin"/>

@@ -2,5 +2,11 @@ apply from: "$rootDir/library-module.gradle"
 
 dependencies {
     api project(':reaktor-android')
-    implementation deps.koin.values()
+
+    testImplementation deps.junit
+
+    implementation deps.koin.core
+    implementation deps.koin.androidx
+    implementation deps.koin.viewmodel
+    testImplementation deps.koin.test
 }
