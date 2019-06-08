@@ -3,6 +3,6 @@ apply from: "$rootDir/library-module.gradle"
 dependencies {
     api project(':reaktor-core')
     api deps.lifecycle.extensions
-    implementation deps.lifecycle.rx
+    api deps.lifecycle.rx
     implementation deps.rxandroid
 }
