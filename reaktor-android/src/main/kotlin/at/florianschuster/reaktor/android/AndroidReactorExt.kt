@@ -1,7 +1,11 @@
 package at.florianschuster.reaktor.android
 
 import at.florianschuster.reaktor.Reaktor
-import io.reactivex.*
+import io.reactivex.Completable
+import io.reactivex.Flowable
+import io.reactivex.Maybe
+import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.annotations.CheckReturnValue
 import io.reactivex.disposables.Disposable
