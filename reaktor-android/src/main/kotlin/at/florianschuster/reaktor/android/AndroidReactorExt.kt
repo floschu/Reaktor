@@ -1,10 +1,7 @@
 package at.florianschuster.reaktor.android
 
 import at.florianschuster.reaktor.Reaktor
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.annotations.CheckReturnValue
 import io.reactivex.disposables.Disposable
@@ -115,6 +112,33 @@ fun Completable.bind(to: Action): Disposable {
  */
 @CheckReturnValue
 fun Completable.bind(to: () -> Unit): Disposable {
+    return observeOn(AndroidSchedulers.mainThread())
+        .subscribe(to, Reaktor::handleError)
+}
+
+/**
+ * Binds a [Maybe] to an UI target. Also logs errors in [Reaktor].
+ */
+@CheckReturnValue
+fun <State : Any> Maybe<State>.bind(): Disposable {
+    return observeOn(AndroidSchedulers.mainThread())
+        .subscribe({}, Reaktor::handleError)
+}
+
+/**
+ * Binds a [Maybe] to an UI target. Also logs errors in [Reaktor].
+ */
+@CheckReturnValue
+fun <State : Any> Maybe<State>.bind(to: Consumer<in State>): Disposable {
+    return observeOn(AndroidSchedulers.mainThread())
+        .subscribe(to, Consumer(Reaktor::handleError))
+}
+
+/**
+ * Binds a [Maybe] to an UI target. Also logs errors in [Reaktor].
+ */
+@CheckReturnValue
+fun <State : Any> Maybe<State>.bind(to: (State) -> Unit): Disposable {
     return observeOn(AndroidSchedulers.mainThread())
         .subscribe(to, Reaktor::handleError)
 }
