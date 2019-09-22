@@ -11,10 +11,10 @@ import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.view.visibility
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.activity_saved_state.*
 import java.util.concurrent.TimeUnit
+import kotlinx.android.synthetic.main.activity_saved_state.*
 
-const val layout: Int = R.layout.activity_saved_state
+private const val layout: Int = R.layout.activity_saved_state
 
 class SavedStateActivity : AppCompatActivity(), ReactorView<SaveStateReactor> {
     private var counterValue: Int = 0
@@ -71,7 +71,9 @@ class SavedStateActivity : AppCompatActivity(), ReactorView<SaveStateReactor> {
 
 class SaveStateReactor(
     initialValue: Int
-) : ViewModelReactor<SaveStateReactor.Action, SaveStateReactor.Mutation, SaveStateReactor.State>(State(initialValue)) {
+) : ViewModelReactor<SaveStateReactor.Action, SaveStateReactor.Mutation, SaveStateReactor.State>(
+    initialState = State(initialValue)
+) {
     sealed class Action {
         object Increase : Action()
         object Decrease : Action()

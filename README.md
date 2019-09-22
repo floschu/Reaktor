@@ -1,6 +1,6 @@
 # Reaktor
 
-![Reaktor](https://img.shields.io/badge/Reaktor-1.0.18-red.svg) 
+![Reaktor](https://img.shields.io/badge/Reaktor-1.1.0-red.svg) 
  ![Kotlin](https://img.shields.io/badge/Language-Kotlin-orange.svg) ![minSdk](https://img.shields.io/badge/Android-minSdk%2014-green.svg)
 
 Reaktor is a framework for a reactive and unidirectional Kotlin application architecture.  
@@ -115,7 +115,7 @@ For more in depth info, you should hit up the [ReactorKit Repo Readme](https://g
 
 The `DefaultReactor` is a default implementation for a **reactor** that handles creation for all variables but not the clearing of the `CompositeDisposable`. Do *not* forget to clear the `CompositeDisposable` in the **reactor** after you are done with it.
 
-The `DefaultReactor` also catches and ignores all errors emitted in `fun mutate()` and `fun reduce()` in release builds to keep the `state` stream going. You can change this behavior for debug builds and also attach an error handler with `Reaktor.handleErrorsWith(...)`.  
+The `DefaultReactor` also catches and ignores all errors emitted in `fun mutate()` and `fun reduce()` to keep the `state` stream going. You can change this behavior (e.g. for debug builds) and also attach an error handler with `Reaktor.attachErrorHandler(...)`.  
 
 ### Reaktor-Android
 
@@ -158,6 +158,12 @@ The `androidkoin` module contains simple extension functions to inject a `ViewMo
 ## Author
 
 Visit my [Website](https://florianschuster.at/).
+
+## How to update
+
+1. Update Versions in `build.gradle`, `info_strings.xml` & `README.md`.
+2. Run `fastlane deploy`.
+3. Tag, commit & push.
 
 ## License
 

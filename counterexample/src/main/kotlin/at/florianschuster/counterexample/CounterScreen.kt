@@ -11,8 +11,8 @@ import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.view.visibility
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.activity_counter.*
 import java.util.concurrent.TimeUnit
+import kotlinx.android.synthetic.main.activity_counter.*
 
 private const val layout: Int = R.layout.activity_counter
 

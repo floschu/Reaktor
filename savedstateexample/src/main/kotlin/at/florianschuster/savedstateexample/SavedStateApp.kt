@@ -9,6 +9,6 @@ class SavedStateApp : Application() {
         super.onCreate()
 
         Timber.plant(Timber.DebugTree())
-        Reaktor.handleErrorsWith(handler = Timber::e)
+        Reaktor.attachErrorHandler(escalateCrashes = BuildConfig.DEBUG, handler = Timber::e)
     }
 }

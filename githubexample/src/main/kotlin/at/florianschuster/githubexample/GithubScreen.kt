@@ -19,9 +19,9 @@ import com.jakewharton.rxbinding3.view.visibility
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import java.util.concurrent.TimeUnit
 import kotlinx.android.synthetic.main.fragment_github.*
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 
 private const val layout: Int = R.layout.fragment_github
 

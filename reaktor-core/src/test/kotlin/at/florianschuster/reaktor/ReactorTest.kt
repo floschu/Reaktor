@@ -3,16 +3,10 @@ package at.florianschuster.reaktor
 import io.reactivex.Observable
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.TestScheduler
-import org.junit.Before
-import org.junit.Test
 import java.util.concurrent.TimeUnit
+import org.junit.Test
 
 class ReactorTest {
-
-    @Before
-    fun setup() {
-        Reaktor.handleErrorsWith(false)
-    }
 
     @Test
     fun testInitialStateOnlyEmittedOnce() {
