@@ -2,7 +2,7 @@ apply from: "$rootDir/library-module.gradle"
 
 dependencies {
     api project(':reaktor-core')
-    api deps.lifecycle.extensions
-    api deps.lifecycle.rx
-    implementation deps.rxandroid
+    api(Libs.lifecycle_extensions)
+    api(Libs.lifecycle_reactivestreams_ktx)
+    implementation(Libs.rxandroid)
 }

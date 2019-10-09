@@ -7,8 +7,9 @@ android {
 }
 
 dependencies {
-    implementation deps.appcompat
-    implementation deps.constraintlayout
-    implementation deps.rxbinding.values()
-    implementation deps.timber
+    implementation(Libs.appcompat)
+    implementation(Libs.constraintlayout)
+    implementation(Libs.rxbinding)
+    implementation(Libs.rxbinding_appcompat)
+    implementation(Libs.timber)
 }

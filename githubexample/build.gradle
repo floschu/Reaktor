@@ -7,11 +7,15 @@ android {
 }
 
 dependencies {
-    implementation deps.appcompat
-    implementation deps.constraintlayout
-    implementation deps.recyclerview
-    implementation deps.rxbinding.values()
-    implementation deps.gson
-    implementation deps.retrofit.values()
-    implementation deps.timber
+    implementation(Libs.appcompat)
+    implementation(Libs.constraintlayout)
+    implementation(Libs.recyclerview)
+    implementation(Libs.rxbinding)
+    implementation(Libs.rxbinding_appcompat)
+    implementation(Libs.rxbinding_recyclerview)
+    implementation(Libs.gson)
+    implementation(Libs.retrofit)
+    implementation(Libs.converter_gson)
+    implementation(Libs.adapter_rxjava2)
+    implementation(Libs.timber)
 }

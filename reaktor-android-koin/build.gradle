@@ -3,10 +3,10 @@ apply from: "$rootDir/library-module.gradle"
 dependencies {
     api project(':reaktor-android')
 
-    testImplementation deps.junit
+    testImplementation(Libs.junit)
 
-    implementation deps.koin.core
-    implementation deps.koin.androidx
-    implementation deps.koin.viewmodel
-    testImplementation deps.koin.test
+    implementation(Libs.koin_core)
+    implementation(Libs.koin_android)
+    implementation(Libs.koin_androidx_viewmodel)
+    testImplementation(Libs.koin_test)
 }
