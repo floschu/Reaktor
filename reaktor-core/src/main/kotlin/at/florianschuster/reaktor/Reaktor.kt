@@ -12,21 +12,6 @@ object Reaktor {
 
     /**
      * Handles error messages, which are swallowed by the state stream by default.
-     *
-     * @param crashInDebug Boolean
-     * @param handler (Throwable) -> Unit
-     */
-    @Deprecated(
-        message = "See https://github.com/floschu/Reaktor/issues/2.",
-        replaceWith = ReplaceWith("Reaktor.attachErrorHandler(escalateCrashes = false /**TODO suggestion: true if debug**/, handler = { })"),
-        level = DeprecationLevel.ERROR
-    )
-    fun handleErrorsWith(crashInDebug: Boolean = true, handler: ((Throwable) -> Unit)? = null) {
-        attachErrorHandler(crashInDebug && BuildConfig.DEBUG, handler)
-    }
-
-    /**
-     * Handles error messages, which are swallowed by the state stream by default.
      * Change escalateCrashes to true only when you know what you are doing!
      *
      * @param escalateCrashes Boolean When set to true, certain `Reactor` components crash on errors
