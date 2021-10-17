@@ -1,5 +1,14 @@
 # Reaktor
 
+## Deprecated
+
+Use the coroutines version instead: [control](https://github.com/floschu/control)
+
+------
+------
+------
+------
+
 ![Reaktor](https://img.shields.io/badge/Reaktor-1.1.0-red.svg) 
  ![Kotlin](https://img.shields.io/badge/Language-Kotlin-orange.svg) ![minSdk](https://img.shields.io/badge/Android-minSdk%2014-green.svg)
 
